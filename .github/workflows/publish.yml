@@ -5,7 +5,7 @@ on:
     types: [published]
 
 permissions:
-  contents: read
+  contents: write  # Required to upload release assets
   id-token: write  # Required for OIDC trusted publishing
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: package-lock.json
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
@@ -37,3 +38,11 @@ jobs:
 
       - name: Publish to npm (Trusted Publishing / OIDC)
         run: npm publish --provenance --access public
+
+      - name: Pack for release asset
+        run: npm pack --pack-destination .
+
+      - name: Upload tgz to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*.tgz"
