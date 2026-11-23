@@ -13,26 +13,30 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          path: .
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: opencode-telos-tui/package-lock.json
 
       - name: Install dependencies
         run: npm ci
+        working-directory: opencode-telos-tui
 
       - name: Run typecheck
         run: npm run typecheck
+        working-directory: opencode-telos-tui
 
       - name: Run lint
         run: npm run lint
+        working-directory: opencode-telos-tui
 
       - name: Run tests
         run: npm run test
+        working-directory: opencode-telos-tui
 
       - name: Build
         run: npm run build
+        working-directory: opencode-telos-tui
