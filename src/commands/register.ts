@@ -466,80 +466,90 @@ export function registerSddCommands(ctx: TuiPluginApi): () => void {
     {
       id: "sdd.viz",
       title: "SDD Dashboard",
+      description: "Start or manage the SDD dashboard visualization",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["viz"], arguments: true },
+      slash: { name: "sdd viz", arguments: true },
       run: vizHandler
     },
     // /sdd status
     {
       id: "sdd.status",
       title: "SDD Status",
+      description: "Show SDD enforcement, dashboard, and graph status",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["status"], arguments: false },
+      slash: { name: "sdd status", arguments: false },
       run: statusHandler
     },
     // /sdd on
     {
       id: "sdd.on",
       title: "Enable SDD Enforcement",
+      description: "Enable spec-driven development enforcement",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["on", "enable"], arguments: false },
+      slash: { name: "sdd on", arguments: false },
       run: onHandler
     },
     // /sdd off
     {
       id: "sdd.off",
       title: "Disable SDD Enforcement",
+      description: "Disable spec-driven development enforcement",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["off", "disable"], arguments: false },
+      slash: { name: "sdd off", arguments: false },
       run: offHandler
     },
     // /sdd renew
     {
       id: "sdd.renew",
       title: "Renew SDD Workflow",
+      description: "Renew the active SDD workflow window",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["renew"], arguments: false },
+      slash: { name: "sdd renew", arguments: false },
       run: renewHandler
     },
     // /sdd cache_reset
     {
       id: "sdd.cache_reset",
       title: "Reset SDD Caches",
+      description: "Reset SDD knowledge graph caches",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["cache_reset", "cachereset"], arguments: false },
+      slash: { name: "sdd cache_reset", arguments: false },
       run: cacheResetHandler
     },
     // /sdd tasks
     {
       id: "sdd.tasks",
       title: "SDD Task Board",
+      description: "View and manage the SDD Kanban task board",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["tasks"], arguments: true },
+      slash: { name: "sdd tasks", arguments: true },
       run: tasksHandler
     },
     // /sdd acceptance
     {
       id: "sdd.acceptance",
       title: "SDD Acceptance Criteria",
+      description: "View acceptance criteria for a requirement",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["acceptance"], arguments: true },
+      slash: { name: "sdd acceptance", arguments: true },
       run: acceptanceHandler
     },
     // /sdd guide
     {
       id: "sdd.guide",
       title: "SDD Human Guidance",
+      description: "Record human guidance for a graph node",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["guide"], arguments: true },
+      slash: { name: "sdd guide", arguments: true },
       run: guideHandler
     },
     // /sdd panel
     {
       id: "sdd.panel",
       title: "SDD Command Panel",
+      description: "Open the SDD interactive command panel",
       group: "SDD",
-      slash: { name: "sdd", aliases: ["panel", "help"], arguments: false },
+      slash: { name: "sdd panel", arguments: false },
       run: panelHandler
     }
   ]

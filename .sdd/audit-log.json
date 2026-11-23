@@ -1,0 +1,11 @@
+[
+  {
+    "id": "audit_1795465883222",
+    "timestamp": "2026-11-23T20:31:23.222Z",
+    "user": "judah",
+    "action": "shell_command",
+    "target": "unknown",
+    "result": "denied",
+    "details": "Unable to resolve shell write target safely"
+  }
+]

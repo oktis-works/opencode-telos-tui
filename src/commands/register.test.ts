@@ -70,10 +70,10 @@ describe("commands/register", () => {
 
     // Verify slash command configs
     const vizCmd = layer.commands.find((c: any) => c.id === "sdd.viz")
-    expect(vizCmd.slash).toEqual({ name: "sdd", aliases: ["viz"], arguments: true })
+    expect(vizCmd.slash).toEqual({ name: "sdd viz", arguments: true })
 
     const statusCmd = layer.commands.find((c: any) => c.id === "sdd.status")
-    expect(statusCmd.slash).toEqual({ name: "sdd", aliases: ["status"], arguments: false })
+    expect(statusCmd.slash).toEqual({ name: "sdd status", arguments: false })
 
     // Cleanup should be a function
     expect(typeof cleanup).toBe("function")
