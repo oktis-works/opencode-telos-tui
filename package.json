@@ -18,7 +18,7 @@
     "build": "tsc -p tsconfig.build.json",
     "dev": "tsc -p tsconfig.build.json --watch",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src --ext ts,tsx",
+    "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepack": "npm run build",

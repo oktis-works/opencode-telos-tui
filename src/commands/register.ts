@@ -218,7 +218,7 @@ export function registerSddCommands(ctx: TuiPluginApi): () => void {
         const result = await getTaskBoard(ctx.client, sessionID)
         showTaskBoardDialog(ctx, "SDD Task Board", result.tasks.length > 0
           ? `Found ${result.tasks.length} tasks across ${Object.keys(result.columns).length} columns.\n\nUse the Kanban tab in the dashboard for full management.`
-          : "No tasks on the board yet.\n\nCreate tasks from the dashboard Kanban or run \`sdd.integrate_tasks\` from the agent.",
+          : "No tasks on the board yet.\n\nCreate tasks from the dashboard Kanban or run `sdd.integrate_tasks` from the agent.",
           result.tasks,
           () => {
             ctx.ui.toast({ message: "Opening dashboard...", variant: "info" })
