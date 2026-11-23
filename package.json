@@ -60,12 +60,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JudahAragao/opencode-telos-tui.git"
+    "url": "https://github.com/oktis-works/opencode-telos-tui.git"
   },
   "bugs": {
-    "url": "https://github.com/JudahAragao/opencode-telos-tui/issues"
+    "url": "https://github.com/oktis-works/opencode-telos-tui/issues"
   },
-  "homepage": "https://github.com/JudahAragao/opencode-telos-tui#readme",
+  "homepage": "https://github.com/oktis-works/opencode-telos-tui#readme",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
