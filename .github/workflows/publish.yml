@@ -22,7 +22,6 @@ jobs:
           node-version: '22'
           cache: 'npm'
           cache-dependency-path: package-lock.json
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm ci
@@ -36,8 +35,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Update npm to latest for OIDC support
+        run: npm install -g npm@latest
+
       - name: Publish to npm (Trusted Publishing / OIDC)
-        run: npm publish --provenance --access public
+        run: npm publish --access public
 
       - name: Pack for release asset
         run: npm pack --pack-destination .
