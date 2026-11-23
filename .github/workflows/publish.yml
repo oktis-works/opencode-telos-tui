@@ -1,40 +1,39 @@
-name: CI
+name: Publish to npm
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write  # Required for OIDC trusted publishing
 
 jobs:
-  ci:
-    name: CI
+  publish:
+    name: Publish to npm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Type check
+      - name: Run typecheck
         run: npm run typecheck
 
       - name: Run tests
-        run: npm test
+        run: npm run test
 
       - name: Build
         run: npm run build
 
-      - name: Verify package contents
-        run: |
-          echo "Package contents:"
-          npm pack --dry-run
+      - name: Publish to npm (Trusted Publishing / OIDC)
+        run: npm publish --provenance --access public
