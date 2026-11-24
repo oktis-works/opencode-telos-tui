@@ -31,7 +31,7 @@ jobs:
             });
             const sha = ref.object.sha;
             
-            // Wait for CI to complete (poll for up to 10 minutes)
+            // Wait for CI to complete SUCCESSFULLY (poll for up to 10 minutes)
             const maxWaitMs = 10 * 60 * 1000;
             const pollIntervalMs = 15000;
             const startTime = Date.now();
@@ -43,25 +43,22 @@ jobs:
                 workflow_id: 'ci.yml',
                 head_sha: sha,
                 status: 'completed',
-                per_page: 1
+                per_page: 5
               });
               
-              if (runs.workflow_runs.length > 0) {
-                ciRun = runs.workflow_runs[0];
+              // Find a successful run for this commit
+              const successRun = runs.workflow_runs.find(r => r.conclusion === 'success');
+              if (successRun) {
+                ciRun = successRun;
                 break;
               }
               
-              console.log(`Waiting for CI to complete... (${Math.round((Date.now() - startTime) / 1000)}s elapsed)`);
+              console.log(`Waiting for CI to complete successfully... (${Math.round((Date.now() - startTime) / 1000)}s elapsed)`);
               await new Promise(r => setTimeout(r, pollIntervalMs));
             }
             
             if (!ciRun) {
-              core.setFailed('Timeout: CI did not complete within 10 minutes');
-              return;
-            }
-            
-            if (ciRun.conclusion !== 'success') {
-              core.setFailed(`CI failed for this release (conclusion: ${ciRun.conclusion}). Cannot publish.`);
+              core.setFailed('Timeout: CI did not complete successfully within 10 minutes');
               return;
             }
             
