@@ -18,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check CI passed for this release
+      - name: Wait for CI to complete and check result
         uses: actions/github-script@v7
         with:
           script: |
@@ -31,21 +31,35 @@ jobs:
             });
             const sha = ref.object.sha;
             
-            // Check CI workflow runs for this commit
-            const { data: runs } = await github.rest.actions.listWorkflowRunsForRepo({
-              owner, repo,
-              workflow_id: 'ci.yml',
-              head_sha: sha,
-              status: 'completed',
-              per_page: 1
-            });
+            // Wait for CI to complete (poll for up to 10 minutes)
+            const maxWaitMs = 10 * 60 * 1000;
+            const pollIntervalMs = 15000;
+            const startTime = Date.now();
             
-            if (runs.workflow_runs.length === 0) {
-              core.setFailed('No CI run found for this release commit');
+            let ciRun = null;
+            while (Date.now() - startTime < maxWaitMs) {
+              const { data: runs } = await github.rest.actions.listWorkflowRunsForRepo({
+                owner, repo,
+                workflow_id: 'ci.yml',
+                head_sha: sha,
+                status: 'completed',
+                per_page: 1
+              });
+              
+              if (runs.workflow_runs.length > 0) {
+                ciRun = runs.workflow_runs[0];
+                break;
+              }
+              
+              console.log(`Waiting for CI to complete... (${Math.round((Date.now() - startTime) / 1000)}s elapsed)`);
+              await new Promise(r => setTimeout(r, pollIntervalMs));
+            }
+            
+            if (!ciRun) {
+              core.setFailed('Timeout: CI did not complete within 10 minutes');
               return;
             }
             
-            const ciRun = runs.workflow_runs[0];
             if (ciRun.conclusion !== 'success') {
               core.setFailed(`CI failed for this release (conclusion: ${ciRun.conclusion}). Cannot publish.`);
               return;
